@@ -1,0 +1,40 @@
+﻿@page "/counter"
+
+@inherits BasePage
+
+<div style="margin: 5px;">
+    <h1>Counter</h1>
+
+    <div id="CountResult">
+        <p>Current count: @CurrentCount</p>
+    </div>
+
+    <div id="Buttons">
+        <MudButton EndIcon="@Icons.Material.Filled.Remove"
+                   Color="Color.Error"
+                   Variant="Variant.Filled"
+                   Id="BtnDecreaseCount"
+                   Raised="true"
+                   @onclick="IncreaseCount">
+            Decrease
+        </MudButton>
+
+        <MudTooltip Text="Reset">
+            <MudIconButton Icon="@Icons.Material.Filled.Clear"
+                           Color="Color.Primary"
+                           Id="BtnResetCount"
+                           Raised="true"
+                           @onclick="ResetCount">
+            </MudIconButton>
+        </MudTooltip>
+
+        <MudButton StartIcon="@Icons.Material.Filled.Add"
+                   Color="Color.Success"
+                   Variant="Variant.Filled"
+                   Id="BtnIncreaseCount"
+                   Raised="true"
+                   @onclick="DecreaseCount">
+            Increase
+        </MudButton>
+    </div>
+</div>
