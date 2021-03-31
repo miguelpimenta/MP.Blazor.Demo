@@ -22,7 +22,7 @@ namespace MP.Blazor.Demo.Pages
 
         private void IncreaseCount()
         {
-            Dispatcher.Dispatch(new DecreaseCounter());
+            Dispatcher.Dispatch(new IncreaseCounter());
         }
 
         private void ResetCount()
@@ -32,7 +32,7 @@ namespace MP.Blazor.Demo.Pages
 
         private void DecreaseCount()
         {
-            Dispatcher.Dispatch(new IncreaseCounter());
+            Dispatcher.Dispatch(new DecreaseCounter());
         }
     }
 }

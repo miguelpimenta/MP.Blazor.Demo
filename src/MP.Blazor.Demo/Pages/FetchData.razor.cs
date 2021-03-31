@@ -15,7 +15,8 @@ namespace MP.Blazor.Demo.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            forecasts = await WeatherForecastService.GetForecastAsync(DateTime.Now)
+            forecasts = await WeatherForecastService
+                .GetForecastAsync(DateTime.Now)
                 .ConfigureAwait(false);
         }
     }

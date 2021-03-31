@@ -29,25 +29,6 @@ namespace MP.Blazor.Demo.Infrastructure
                 .RegisterType<WeatherForecastService>()
                 .As<IWeatherForecastService>()
                 .SingleInstance();
-
-            //            builder
-            //                .Register<ILogger>((c, p) =>
-            //            {
-            //                return new LoggerConfiguration()
-            //#if DEBUG
-            //                    .MinimumLevel.Debug()
-            //#else
-            //                    .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
-            //                    .MinimumLevel.Override("System", LogEventLevel.Warning)
-            //                    .MinimumLevel.Override("Microsoft.AspNetCore.Authentication", LogEventLevel.Information)
-            //#endif
-            //                    .Enrich.FromLogContext()
-            //                    .WriteTo
-            //                        .Console(
-            //                            outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}",
-            //                            theme: AnsiConsoleTheme.Literate)
-            //                    .CreateLogger();
-            //            }).SingleInstance();
         }
     }
 }

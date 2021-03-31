@@ -11,7 +11,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MP.Blazor.Demo.Core;
 using MP.Blazor.Demo.Infrastructure;
-using MP.Blazor.Demo.Services;
 using MudBlazor.Services;
 
 namespace MP.Blazor.Demo
@@ -29,9 +28,6 @@ namespace MP.Blazor.Demo
 
         public void ConfigureServices(IServiceCollection services)
         {
-            //! Serilog
-            services.AddSerilogLogging();
-
             services.AddRazorPages();
             services.AddServerSideBlazor();
 
