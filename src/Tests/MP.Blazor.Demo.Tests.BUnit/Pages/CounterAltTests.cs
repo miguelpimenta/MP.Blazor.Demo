@@ -17,26 +17,26 @@ namespace MP.Blazor.Demo.Tests.BUnit.Pages
     [Trait("Category", "Counter Increase/Decrease")]
     public class CounterAltTests : TestContext
     {
-        private readonly IJSRuntime IJSRuntime;
-        private readonly NavigationManager NavigationManager;
-        private readonly IConfiguration Configuration;
-        private readonly ILogger Logger;
+        private readonly IJSRuntime _jsRuntime;
+        private readonly NavigationManager _navigationManager;
+        private readonly IConfiguration _configuration;
+        private readonly ILogger _logger;
 
         public CounterAltTests()
         {
-            IJSRuntime = A.Fake<IJSRuntime>();
-            NavigationManager = A.Fake<NavigationManager>();
-            Configuration = A.Fake<IConfiguration>();
-            Logger = A.Fake<ILogger>();
+            _jsRuntime = A.Fake<IJSRuntime>();
+            _navigationManager = A.Fake<NavigationManager>();
+            _configuration = A.Fake<IConfiguration>();
+            _logger = A.Fake<ILogger>();
         }
 
         private TestContext GetTestContext()
         {
             var ctx = new TestContext();
-            ctx.Services.AddSingleton(NavigationManager);
-            ctx.Services.AddSingleton(IJSRuntime);
-            ctx.Services.AddSingleton(Configuration);
-            ctx.Services.AddSingleton(Logger);
+            ctx.Services.AddSingleton(_navigationManager);
+            ctx.Services.AddSingleton(_jsRuntime);
+            ctx.Services.AddSingleton(_configuration);
+            ctx.Services.AddSingleton(_logger);
             return ctx;
         }
 

@@ -8,6 +8,8 @@ namespace MP.Blazor.Demo.Pages
 
         protected override async Task OnInitializedAsync()
         {
+            await Task.Delay(1)
+                .ConfigureAwait(false);
         }
 
         private void IncreaseCount()

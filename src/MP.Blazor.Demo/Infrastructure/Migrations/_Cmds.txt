@@ -1,0 +1,7 @@
+﻿
+
+dotnet ef migrations add Initial --context MP.Blazor.Demo.Infrastructure.Contexts.AppDbContext -o Infrastructure\Migrations
+
+	dotnet ef migrations add Update
+
+dotnet ef database update

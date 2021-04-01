@@ -20,33 +20,33 @@ namespace MP.Blazor.Demo.Tests.BUnit.Pages
     [Trait("Category", "Counter Increment/Decrement")]
     public class CounterTests : TestContext
     {
-        private readonly IState<CounterState> CounterState;
-        private readonly IDispatcher Dispatcher;
-        private readonly IJSRuntime IJSRuntime;
-        private readonly NavigationManager NavigationManager;
-        private readonly IConfiguration Configuration;
-        private readonly ILogger Logger;
+        private readonly IState<CounterState> _counterState;
+        private readonly IDispatcher _dispatcher;
+        private readonly IJSRuntime _jsRuntime;
+        private readonly NavigationManager _navigationManager;
+        private readonly IConfiguration _configuration;
+        private readonly ILogger _logger;
 
         public CounterTests()
         {
-            CounterState = A.Fake<IState<CounterState>>();
-            Dispatcher = A.Fake<IDispatcher>();
-            IJSRuntime = A.Fake<IJSRuntime>();
-            NavigationManager = A.Fake<NavigationManager>();
-            Configuration = A.Fake<IConfiguration>();
-            Logger = A.Fake<ILogger>();
+            _counterState = A.Fake<IState<CounterState>>();
+            _dispatcher = A.Fake<IDispatcher>();
+            _jsRuntime = A.Fake<IJSRuntime>();
+            _navigationManager = A.Fake<NavigationManager>();
+            _configuration = A.Fake<IConfiguration>();
+            _logger = A.Fake<ILogger>();
         }
 
         private TestContext GetTestContext()
         {
             var ctx = new TestContext();
             ctx.Services.AddFluxor(options => options.ScanAssemblies(Assembly.Load("MP.Blazor.Demo")));
-            ctx.Services.AddSingleton(CounterState);
-            ctx.Services.AddSingleton(Dispatcher);
-            ctx.Services.AddSingleton(NavigationManager);
-            ctx.Services.AddSingleton(IJSRuntime);
-            ctx.Services.AddSingleton(Configuration);
-            ctx.Services.AddSingleton(Logger);
+            ctx.Services.AddSingleton(_counterState);
+            ctx.Services.AddSingleton(_dispatcher);
+            ctx.Services.AddSingleton(_navigationManager);
+            ctx.Services.AddSingleton(_jsRuntime);
+            ctx.Services.AddSingleton(_configuration);
+            ctx.Services.AddSingleton(_logger);
             return ctx;
         }
 
@@ -64,7 +64,7 @@ namespace MP.Blazor.Demo.Tests.BUnit.Pages
             btnIncrease.Click();
 
             // Assert
-            A.CallTo(() => Dispatcher.Dispatch(new IncreaseCounter()))
+            A.CallTo(() => _dispatcher.Dispatch(new IncreaseCounter()))
                 .MustHaveHappenedOnceExactly();
 
             cut
@@ -88,7 +88,7 @@ namespace MP.Blazor.Demo.Tests.BUnit.Pages
             btnDecrease.Click();
 
             // Assert
-            A.CallTo(() => Dispatcher.Dispatch(new DecreaseCounter()))
+            A.CallTo(() => _dispatcher.Dispatch(new DecreaseCounter()))
                 .MustHaveHappenedOnceExactly();
 
             cut

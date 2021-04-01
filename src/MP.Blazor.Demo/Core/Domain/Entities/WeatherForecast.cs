@@ -1,8 +1,9 @@
 using System;
+using MP.Blazor.Demo.Core.Domain.Common;
 
 namespace MP.Blazor.Demo.Core.Domain.Entities
 {
-    public class WeatherForecast
+    public class WeatherForecast : BaseEntity
     {
         public DateTime Date { get; set; }
 

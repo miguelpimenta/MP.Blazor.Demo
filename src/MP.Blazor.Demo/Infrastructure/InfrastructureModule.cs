@@ -2,6 +2,7 @@
 using Autofac;
 using Microsoft.Extensions.Configuration;
 using MP.Blazor.Demo.Core.Application.Contracts;
+using MP.Blazor.Demo.Infrastructure.Contexts;
 using MP.Blazor.Demo.Infrastructure.Data;
 
 namespace MP.Blazor.Demo.Infrastructure
@@ -18,6 +19,11 @@ namespace MP.Blazor.Demo.Infrastructure
         protected override void Load(ContainerBuilder builder)
         {
             var currentAssembly = System.Reflection.Assembly.GetExecutingAssembly();
+
+            builder
+                .RegisterType<AppDbContext>()
+                .WithParameter("options", DbContextOptionsFactory.Get(_config))
+                .InstancePerLifetimeScope();
 
             builder
                 .RegisterAssemblyTypes(currentAssembly)
