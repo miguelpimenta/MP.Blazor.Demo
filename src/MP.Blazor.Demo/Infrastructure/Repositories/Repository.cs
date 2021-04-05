@@ -18,6 +18,7 @@ namespace MP.Blazor.Demo.Infrastructure.Repositories
         public Repository(AppDbContext dbContext)
         {
             _dbContext = dbContext;
+            _dbContext.Set<TEntity>();
         }
 
         public async Task<TEntity> CreateAsync(

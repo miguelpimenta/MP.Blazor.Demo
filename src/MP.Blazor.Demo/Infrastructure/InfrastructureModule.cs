@@ -1,9 +1,11 @@
-﻿using System.Linq;
+﻿using System;
+using System.Net;
+using System.Net.Http;
 using Autofac;
 using Microsoft.Extensions.Configuration;
 using MP.Blazor.Demo.Core.Application.Contracts;
 using MP.Blazor.Demo.Infrastructure.Contexts;
-using MP.Blazor.Demo.Infrastructure.Data;
+using MP.Blazor.Demo.Infrastructure.Repositories;
 
 namespace MP.Blazor.Demo.Infrastructure
 {
@@ -25,16 +27,16 @@ namespace MP.Blazor.Demo.Infrastructure
                 .WithParameter("options", DbContextOptionsFactory.Get(_config))
                 .InstancePerLifetimeScope();
 
-            builder
-                .RegisterAssemblyTypes(currentAssembly)
-                .Where(r => r.Name.EndsWith("Repository"))
-                .AsImplementedInterfaces()
+            builder.RegisterGeneric(typeof(Repository<>))
+                .As(typeof(IRepository<>))
                 .InstancePerLifetimeScope();
 
-            builder
-                .RegisterType<WeatherForecastService>()
-                .As<IWeatherForecastService>()
-                .SingleInstance();
+            builder.Register(_ => new HttpClient()
+            {
+                BaseAddress = new Uri(_config.GetSection("BaseAddress").Value),
+                DefaultRequestVersion = HttpVersion.Version20
+            })
+                .InstancePerLifetimeScope();
         }
     }
 }

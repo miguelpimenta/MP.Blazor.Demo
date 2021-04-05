@@ -3,14 +3,16 @@ using System;
 using MP.Blazor.Demo.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MP.Blazor.Demo.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210401113847_Update2")]
+    partial class Update2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -153,7 +155,7 @@ namespace MP.Blazor.Demo.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("WeatherForecasts", "dbo");
+                    b.ToTable("WetherForecasts", "dbo");
 
                     b.HasData(
                         new

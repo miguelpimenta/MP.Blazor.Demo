@@ -21,14 +21,35 @@ namespace MP.Blazor.Demo.Tests.BUnit.Pages
     public class CounterTests : TestContext
     {
         private readonly IState<CounterState> _counterState;
+
+        private readonly IState _state;
+
         private readonly IDispatcher _dispatcher;
         private readonly IJSRuntime _jsRuntime;
         private readonly NavigationManager _navigationManager;
         private readonly IConfiguration _configuration;
         private readonly ILogger _logger;
 
+        private readonly IStore _store;
+
+        //public override Task InitializeAsync(IStore store)
+        //{
+        //    Store = store;
+        //    //Console.WriteLine(nameof(InitializeAsync));
+        //    return Task.CompletedTask;
+        //}
+
         public CounterTests()
         {
+            _store = A.Fake<IStore>();
+
+            _store.AddFeature
+                _store.AddEffect
+
+            _store.InitializeAsync();
+
+            //var x = new Fluxor.Blazor.Web.StoreInitializer();
+
             _counterState = A.Fake<IState<CounterState>>();
             _dispatcher = A.Fake<IDispatcher>();
             _jsRuntime = A.Fake<IJSRuntime>();

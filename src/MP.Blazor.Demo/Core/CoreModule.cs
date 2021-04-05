@@ -21,6 +21,11 @@ namespace MP.Blazor.Demo.Core
                 .RegisterType<UserService>()
                 .As(typeof(IUserService))
                 .InstancePerLifetimeScope();
+
+            builder
+                .RegisterType<WeatherForecastService>()
+                .As(typeof(IWeatherForecastService))
+                .InstancePerLifetimeScope();
         }
     }
 }

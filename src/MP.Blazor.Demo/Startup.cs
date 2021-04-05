@@ -1,6 +1,3 @@
-using System;
-using System.Net;
-using System.Net.Http;
 using System.Reflection;
 using Autofac;
 using Fluxor;
@@ -11,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MP.Blazor.Demo.Core;
 using MP.Blazor.Demo.Infrastructure;
+using MudBlazor;
 using MudBlazor.Services;
 
 namespace MP.Blazor.Demo
@@ -31,26 +29,37 @@ namespace MP.Blazor.Demo
             services.AddRazorPages();
             services.AddServerSideBlazor();
 
-            //! Http Client
-            services.AddScoped(_ =>
-            {
-                return new HttpClient
-                {
-                    BaseAddress = new Uri(Configuration.GetSection("BaseAddress").Value),
-                    DefaultRequestVersion = HttpVersion.Version20
-                };
-            });
+            ////! Http Client
+            //services.AddScoped(_ =>
+            //{
+            //    return new HttpClient
+            //    {
+            //        BaseAddress = new Uri(Configuration.GetSection("BaseAddress").Value),
+            //        DefaultRequestVersion = HttpVersion.Version20
+            //    };
+            //});
 
-            services.AddMudServices();
+            services.AddMudServices(config =>
+            {
+                config.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.BottomRight;
+
+                config.SnackbarConfiguration.PreventDuplicates = false;
+                config.SnackbarConfiguration.NewestOnTop = false;
+                config.SnackbarConfiguration.ShowCloseIcon = true;
+                config.SnackbarConfiguration.VisibleStateDuration = 10000;
+                config.SnackbarConfiguration.HideTransitionDuration = 500;
+                config.SnackbarConfiguration.ShowTransitionDuration = 500;
+                config.SnackbarConfiguration.SnackbarVariant = Variant.Filled;
+            });
 
             //! Fluxor
             services.AddFluxor(options =>
-            {
-                options.ScanAssemblies(Assembly.GetExecutingAssembly());
+        {
+            options.ScanAssemblies(Assembly.GetExecutingAssembly());
 #if DEBUG
-                options.UseReduxDevTools();
+            options.UseReduxDevTools();
 #endif
-            });
+        });
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
