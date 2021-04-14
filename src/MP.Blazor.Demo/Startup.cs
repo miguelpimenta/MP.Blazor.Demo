@@ -2,12 +2,17 @@ using System.Reflection;
 using Autofac;
 using Fluxor;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MP.Blazor.Demo.Areas.Identity;
 using MP.Blazor.Demo.Core;
 using MP.Blazor.Demo.Infrastructure;
+using MP.Blazor.Demo.Infrastructure.Contexts;
 using MudBlazor;
 using MudBlazor.Services;
 
@@ -17,8 +22,6 @@ namespace MP.Blazor.Demo
     {
         public IConfiguration Configuration { get; }
 
-        public ILifetimeScope AutofacContainer { get; private set; }
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -26,18 +29,23 @@ namespace MP.Blazor.Demo
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<AppIdentityDbContext>(options =>
+                options.UseSqlite(
+                    Configuration.GetConnectionString("SqliteConnection")));
+
+            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<AppIdentityDbContext>();
+
+            //services.AddDbContext<AppDbContext>(options =>
+            //    options.UseSqlite(
+            //        Configuration.GetConnectionString("SqliteConnection")));
+
             services.AddRazorPages();
             services.AddServerSideBlazor();
 
-            ////! Http Client
-            //services.AddScoped(_ =>
-            //{
-            //    return new HttpClient
-            //    {
-            //        BaseAddress = new Uri(Configuration.GetSection("BaseAddress").Value),
-            //        DefaultRequestVersion = HttpVersion.Version20
-            //    };
-            //});
+            services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
+            services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddMudServices(config =>
             {
@@ -54,12 +62,12 @@ namespace MP.Blazor.Demo
 
             //! Fluxor
             services.AddFluxor(options =>
-        {
-            options.ScanAssemblies(Assembly.GetExecutingAssembly());
+            {
+                options.ScanAssemblies(Assembly.GetExecutingAssembly());
 #if DEBUG
-            options.UseReduxDevTools();
+                options.UseReduxDevTools();
 #endif
-        });
+            });
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
@@ -74,6 +82,7 @@ namespace MP.Blazor.Demo
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseMigrationsEndPoint();
             }
             else
             {
@@ -86,8 +95,12 @@ namespace MP.Blazor.Demo
 
             app.UseRouting();
 
+            app.UseAuthentication();
+            app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllers();
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
             });

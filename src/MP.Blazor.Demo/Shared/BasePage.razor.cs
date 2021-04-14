@@ -15,5 +15,7 @@ namespace MP.Blazor.Demo.Shared
         protected ILogger Logger { get; set; }
 
         #endregion Injects
+
+        protected bool isLoading = true;
     }
 }

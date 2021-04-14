@@ -15,14 +15,15 @@
             Blazor Demo
         </MudText>
         <MudAppBarSpacer />
-        <MudIconButton Icon="@Icons.Custom.Brands.MudBlazor"
-                       Color="Color.Inherit"
-                       Link="https://mudblazor.com/"
-                       Target="_blank" />
-        <MudIconButton Icon="@Icons.Custom.Brands.GitHub"
-                       Color="Color.Inherit"
-                       Link="https://github.com/Garderoben/MudBlazor"
-                       Target="_blank" />
+        @*<MudIconButton Icon="@Icons.Custom.Brands.MudBlazor"
+                           Color="Color.Inherit"
+                           Link="https://mudblazor.com/"
+                           Target="_blank" />
+            <MudIconButton Icon="@Icons.Custom.Brands.GitHub"
+                           Color="Color.Inherit"
+                           Link="https://github.com/Garderoben/MudBlazor"
+                           Target="_blank" />*@
+        <LoginDisplay></LoginDisplay>
     </MudAppBar>
     <MudDrawer @bind-Open="_drawerOpen"
                ClipMode="DrawerClipMode.Always"
